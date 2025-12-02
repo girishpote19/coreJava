@@ -1,0 +1,56 @@
+Java Core -
+
+1. what is difference between JDK & JRE?
+-> JDK - java development Kit which is a software development environment for building Java apps. Write & compile code. ex: javac MyApp.java (javac comes from JDK)
+JRE - JAVA Runtime Environment , which is required to run Java programs.Run the code. ex; java MyApp (java command & JVM comes from JRE).
+
+2. Why is Java Platform independent language?
+-> Java is the Platform independent coz of the concept of JVM and byteCode.
+-> Java is platform independent becuase the compiler generates Bytecode that is not OS dependent. The JVM on each OS interprets the same byteCode and converts it into native machine code .which makes Java programs independent.
+ex: javac MyApp.java --> MyApp.class (byteCode) program independent.
+
+3. What is the difference between an Abstract class and an Interface?
+-> An Abstract class is class that cannot be instantiated or create obj of it , and can only be inherited.
+	can have Abstract and non-abstract methods
+	can have constructor.
+	no body to abstract methods.
+-> An Interface is blueprint of class that contains only abstract methods and constants.
+	Methods are public abstract by default (Java 8+ supports default & static methods).
+	variables are always public static final (Constants).
+	No Constructor (coz cannot be instantiated)
+	Supports multiple inheritance ( class can implement multiple interfaces).
+ex: Abstract Class Example -
+abstract class Payment {
+		void generateReceipt(){
+		Syso("Receipt generated");
+		}
+		abstract void makePayment(); }
+Here:
+
+generateReceipt() is a common,non-abstract method
+
+makePayment() must be implemented by child classes	
+
+Interface Example: 
+interface UPI {
+    void payThroughUPI();
+}
+
+Use Case:
+ class GooglePay extends Payment implements UPI {
+
+    @Override
+    void makePayment() {
+        System.out.println("Payment via Bank Server");
+    }
+
+    @Override
+    public void payThroughUPI() {
+        System.out.println("UPI Payment");
+    }
+}
+👉 Payment (abstract class) gives common functionality
+👉 UPI (interface) gives capability behavior
+👉 GooglePay can use both
+ 
+ 

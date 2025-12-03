@@ -52,5 +52,155 @@ Use Case:
 👉 Payment (abstract class) gives common functionality
 👉 UPI (interface) gives capability behavior
 👉 GooglePay can use both
- 
- 
+
+4. What is the diff between final, finally and finalize?
+-> Final is used to make variable,class or method constant and cannot change later.
+variable - value cannot be changed
+method - cannot be overridden
+class - cannot be inherited
+Example : final int x = 10;  // cannot change value x = 20 → error
+
+final void display() {}  // cannot override
+
+final class Vehicle {}   // cannot extend
+
+->Finally is used in try-catch blocks to execute a block of code either exception is thrown or not . eg: closing db connections, closing files, freeing up threads.
+example : try {
+    int a = 10 / 0;
+} catch (Exception e) {
+    System.out.println("Exception");
+} finally {
+    System.out.println("Close DB connection");
+}
+
+->finalize is a prtotected method that is called by the Garbage collector for code cealnup when an object is no longer in use.
+ example : @Override
+protected void finalize() {
+    System.out.println("Object is getting garbage collected");
+}
+
+5. what is the difference betn stack and head memory?
+-> stack memory is used for storing local variables, refrences and function called
+ex: void test() {
+    int a = 10;      // stored in stack
+    Employee e = new Employee();  // e is reference stored in stack
+}
+
+-> HEap memory is used for soring objects and instance variables.
+ex: Employee e = new Employee();
+e (reference) → stack
+actual new Employee() object → heap
+
+| Feature       | Stack                         | Heap                        |
+| ------------- | ----------------------------- | --------------------------- |
+| Stores        | Local variables, references   | Objects, instance variables |
+| Speed         | Fast                          | Slower                      |
+| Thread-safety | Each thread has its own stack | Shared across threads       |
+| Managed by    | Java automatically            | Garbage Collector           |
+| Errors        | StackOverflowError            | OutOfMemoryError            |
+
+6. what is diff betn method overloading and method overriding?
+-> Method Overloading means method having same names but different parameters in same class.
+ex: 
+class Calculator {
+
+    int add(int a, int b) {
+        return a + b;
+    }
+
+    double add(double a, double b) {
+        return a + b;
+    }
+
+    int add(int a, int b, int c) {
+        return a + b + c;
+    }
+}
+Here, add() is overloaded 3 times.
+-> Method Overriding means there we have childParent relationship where child class can override properties or functions of there parent class by extend it and provides its own implemention.
+Ex :
+class Bank {
+    double getRate() {
+        return 5.0;
+    }
+}
+
+class SBI extends Bank {
+    @Override
+    double getRate() {
+        return 6.5;
+    }
+}
+SBI overrides getRate().
+Overriding = Child changes parent's rule
+
+👉 Example:
+Father says: “Wake up at 6 AM.”
+You say: “No, I will wake up at 7 AM.”
+
+You override the rule → Overriding.
+
+7. What is diff betn a private and protected modifier?
+-> Private modifier allow members accessible only within same class.
+	Used for encapsulation and hiding sensitive data.
+	Private methods cannot be overridden.
+EX: 
+	class A {
+    private int data = 10;
+    private void show() {
+        System.out.println("Private Method");
+    }
+}
+data and show() cannot be accessed from outside class A.
+
+-> Protected modifier allow members accessible within the same class and its subclasses even in diff pkg.
+EX :
+class A {
+    protected int value = 20;
+    protected void display() {
+        System.out.println("Protected Method");
+    }
+}
+
+class B extends A {
+    void test() {
+        System.out.println(value); // allowed
+        display();                 // allowed
+    }
+}
+
+8. What is constructor overloading in java?
+-> Constructor Overloading means creating multiple constructors in the same class with the same name but different parameters.
+ex:
+class Employee {
+
+    int id;
+    String name;
+    String dept;
+
+    // 1. No-arg constructor
+    Employee() {
+        this.id = 0;
+        this.name = "Unknown";
+        this.dept = "General";
+    }
+
+    // 2. Constructor with 1 parameter
+    Employee(int id) {
+        this.id = id;
+    }
+
+    // 3. Constructor with 2 parameters
+    Employee(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    // 4. Constructor with 3 parameters
+    Employee(int id, String name, String dept) {
+        this.id = id;
+        this.name = name;
+        this.dept = dept;
+    }
+}
+Here, the class Employee has four constructors, each providing a different way to initialize an object.

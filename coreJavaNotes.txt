@@ -204,3 +204,86 @@ class Employee {
     }
 }
 Here, the class Employee has four constructors, each providing a different way to initialize an object.
+
+10 . What is the use of super keyword in java?
+-> Super keyword is used to access parent class (superclass) members such as:
+	parent variables
+	parent methods
+	parent constructors
+Mainly used in inheritance.
+super keyword has 3 main uses
+1) Useful when parent and child have the same variable names.
+ex:
+class A {
+	int val = 100; }
+class B extends A{
+	int val = 200;
+	
+	void show(){
+	Syso (this.value); // child value → 200
+	Syso (super.value); // parent value → 100
+} }
+2) To call parent class methods
+used when child class overrides a method but still wants to use parent method.
+ex:
+class A {
+	void msg () {
+		Syso ("Msg from parent");
+		}
+	}
+class B extends A {
+	@Override
+	void msg (){
+		super.msg(); //call parent method here
+		Syso ("msg from child"); //overidin method
+		}
+	}
+3) To call parent class constructor
+must be the first statement inside the child constructor.
+ex:
+class A {
+	A() {
+		Syso ("Parent constructor");
+		}
+	}
+class B extends A {
+	B() {
+		super(); //calls parent constructor
+		syso ("child constructor");
+		}
+	}
+	
+11. What is the diff betn static methods, static variables, and static classes in java?
+-> Belongs to the Class not to the  Object.they are allocated mem when the class is loaded and directly called with the help of class names.
+Java has -
+1. static Variables.
+2. Static methods.
+
+1. static variables :
+Variables declared by Static keyword and variables belong to the class not to obj.
+stored in class loading memory.
+ex :
+class emp {
+	static String company = "CG";
+	int id;
+}
+All emp objects has same company value = "CG".
+2. Static Method:
+methods declared by Static keyword belong to the class not to object.
+can called without obj creation.
+Ex: 
+class MathUtils {
+	static int square(int x) {
+	return x*x ;
+}
+}
+call directly without obj create : MathUtils.square(5);
+
+12. what exactly is system.out.println in  java?
+-> System.out.println() is a method to print a message on the console. 
+System - its a class present in java.lang pkg.
+Out - is the static variable inside System class.
+println() - is the method present in the PrintStream class - print msg on new line
+
+13. what part of memory-Stack or Heap is cleaned in the garabage collection process?
+-> GC is done on Heap memory to free the memory from unused java objects.

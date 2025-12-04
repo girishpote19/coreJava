@@ -287,3 +287,81 @@ println() - is the method present in the PrintStream class - print msg on new li
 
 13. what part of memory-Stack or Heap is cleaned in the garabage collection process?
 -> GC is done on Heap memory to free the memory from unused java objects.
+
+============================================================================================
+Object Oriented Programming
+
+1. what are the object oriented fetures supported by java?
+
+Abstraction - Hidding sensitive data from the users and shows only essentials deatils to them this can be done through abstract classes and interfaces.
+ex: sending SMS, ATM machine.
+Realtime ex: List list = new ArrayList()
+
+Encapsulation - Wrapping data members / functions in single unit and keep them secure by using access modifier as private .
+Ex: capsule in which several medicines are wrapped together in single unit
+Realtime ex: DTO/POJO classes
+
+Inheritence - here we have child parent relationship, child class can extends the properties of there parent class .
+types of inheritance - single, multiple (not possible - possible thrpugh the Intefaces), multilevel, heirarchical
+
+Polymorphism - perform single action in different ways like single person have diff roles eg: Woman can perform diff roles like Mother , sister , houswife, emp etc
+two types of polymorphism - 
+copiletime method overloading
+runtime method overriding
+
+overloading means having same function name but diff parameters. eg : add(), add(a,b)..
+overriding means child class can override the properties of there parent class by extending the parent class and provides its own implementation.
+
+class and Object - class is the blueprint/templates its collection of obj.
+object are nothing but realworld data entities which is having data members and functions
+eg - class Dog {
+		String name; 
+		
+		eat();
+		bark();
+		}
+		Dog d = new Dog();
+		d.eat();
+		d.bark();
+		
+2. what are the diff access specifiers used in java?
+
+Java has 4 access specifiers:
+public - less restrictive can be access by any class or method.
+Use case:
+Methods used across layers (Controller → Service → DAO).
+
+private - can be accessed only within the class.
+Use case:
+Hide sensitive data → like password, salary, user info.
+
+protected - can be accessed in same class, then the classes of same pkg or outside of pkg by subclasses of that class via inheritance.
+
+Default no keyword - can be accessed within same pkg its default option for class , method and variables.
+
+3. What is the diff betn Composition and Inheritence?
+Java supports Two major ways to reuse code.
+
+Inheritence(is-a relationship) -
+
+one class extends another class
+ex: class Car extends Vehicle {} - 
+meaning - Car isA Vehicle.
+use when : 
+child class wants to use parentclass properties
+achive overriding
+Problems:
+tight coupling , parent class changes -> child also affected
+multiple inheritance not supported, break encapsulation(child gets too much access).
+
+Composition(has-a relationship)-
+
+One class contains another class object.
+ex: class Car {
+	private Engine engine = new Engine ();
+	}
+Meaning - Car hasA Engine
+Use when:
+loosely coupled - replacing any code easy
+want strong encapsulation
+avoid multiple inheritance

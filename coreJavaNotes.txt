@@ -364,4 +364,95 @@ Meaning - Car hasA Engine
 Use when:
 loosely coupled - replacing any code easy
 want strong encapsulation
-avoid multiple inheritance
+avoid multiple inheritance issue.
+
+4. What is the purpose of an abstract class?
+-> Abstract class is declared by using Abstract keyword , we cannot intatntiated / create object of the abstract class.Abstract class has abstract methods without its implementation just method and which is implemented in the subclasses.
+Abstract class helpful for achive abstraction and code reusability , abstract classes can be inhertited by the other classes.
+
+5.What are the diff betn constructor and method of a class in Java?
+-> constructor has same name as class name , 
+constructor is required for object createion , 
+we can have default constructor as well as parameterize constructors.
+Constructor have no return type.
+
+Method is used to expose the object behaviour/ logic.
+method should have return type , if does not return anything return type is void.
+ ex: public class Emp {
+		private int id;
+		
+		public Emp(int id) {
+		//constructor
+		this.id = id;
+		}
+		
+	public void fetchData(){
+		Syso("fetching data");
+		}
+	}
+Usage:
+	Emp emp = new Emp(); //constructor called automatically
+	emp.fetchData(); //method called explicitly
+	
+6. What is diamond problem in java and how is it resolved?
+-> A class inherits from two parent classes, and both parent classes have a method with the same name.
+      A
+     / \
+    B   C
+     \ /
+      D
+class B and C inherit from A.
+class D inherits from class B & C.
+if A has method sayHello(), and both class B & C inherit it.
+then class D gets two copies of same method sayHello().
+so the compiler get confused: which sayHello() should class D use - from B or from C?
+This ambiguity is called the Diamond problem.
+
+Why Java Does NOT Have the Diamond Problem?
+Because Java does not support multiple inheritance with classes.
+❌ You cannot do this in Java:
+class B extends A, C { } 
+
+Diamond problem with Java Intefaces:
+interface A {
+	default void show() {
+		Syso("A show");
+		}
+	}
+interface B {
+	default void show() {
+		Syso("B show");
+		}
+	}
+
+class C implemets A, B {
+
+	@Override
+	public void show () {
+		Syso("resolved show in C");
+		}
+	}
+👉 Java forces class C to override show() to avoid ambiguity.
+
+7. What is the diff betn local and instance variables in Java?
+Local variable - variables decalred inside the methods, belongs to the method. 
+cannot use access modifier public, private , protected
+stored in stack.
+ex:
+void test() {
+	int x = 10; // local variable
+}
+Instance variable- variables decalred inside the class.belongs to the object(instance). access modifiers use public, private.
+stored in heap
+ex:
+class Emp {
+	int age; //instance variable
+}
+
+8. What is Marker interface in java?
+Marker interface also called as Tagging interface that has No methods, No fields, No Code
+it is used to marked / tag a class so JVM can understand that the class has some special behavior.
+⭐ Examples of Marker Interfaces in Java:
+1️. Serializable
+Used to mark a class eligible for serialization (converting object → byte stream).
+class Employee implements Serializable { }

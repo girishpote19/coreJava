@@ -157,7 +157,7 @@ TERMINATED: done
 🟦 Step 5: Thread Methods (Very Simple Today)
 Method	What it does
 start()	start new thread
-run()	thread task
+run()	thread logic/task
 sleep(1000)	pauses thread
 join()	wait for other thread
 yield()	give chance to others
@@ -206,3 +206,81 @@ This prevents data corruption.
 ✔ Thread lifecycle
 ✔ Race condition
 ✔ Basic synchronization
+
+🔥 STEP 2 — Advanced Multithreading Concepts
+
+1. Synchronized block vs Synchronized method:
+
+Synchronized method :
+~Lock is on entire method.
+~Slower -> becuase whole method is locked.
+
+ex: 
+synchronized void increment() {
+count++;
+}
+
+Synchronized block:
+~ Lock is on specific part of method.
+~ Faster -> coz only specific part is locked.
+
+void increment() {
+	synchronized(this) {
+		count++;
+		}
+	}
+
+We use synchronized blocks to improve the app performance by locking only required code instead of locking entire method.
+
+2. What is Volatile keyword?
+Problem: 
+If two threads accessing the variables , one thread may not see updated immediately because threads store variables in CPU cache.
+Solution:
+	volatile boolean flag = true;
+Meaning:
+variable value is always read from main memory.
+all threads get updated value immediately
+
+3. Deadlock 
+Deadlock is the situation where every thread is in waiting state for the resource availability and the thread which currently occupied the resource that is also into the waiting state such situation is called as Deadlock.
+
+Real Life Example:
+Boyfriend has phone and wants charger.
+Girlfriend has charger and wants phone.
+Both are waiting → no one gives → deadlock.
+
+4.Runnable VS Callable Interfaces
+
+| Runnable               | Callable               |
+| ---------------------- | ---------------------- |
+| override run()         | override call()        |
+| no return value        | returns value          |
+| cannot throw exception | can throw exception    |
+| used for simple tasks  | used for complex tasks |
+
+5. Thread Pools (Executor Framework)
+
+Creating too many threads → memory issue.
+
+So Java introduced Thread Pool.
+
+ex:
+ExecutorService executor = Executors.newFixedThreadPool(5);
+
+executor.submit(() -> {
+    System.out.println("Task executed");
+});
+
+Benefits:
+Reuses threads
+Faster
+Controlled number of threads
+Best for production systems
+
+Important thread pools:
+| Pool                    | Use               |
+| ----------------------- | ----------------- |
+| newFixedThreadPool      | fixed threads     |
+| newCachedThreadPool     | unlimited threads |
+| newSingleThreadExecutor | only 1 thread     |
+| newScheduledThreadPool  | delayed tasks     |

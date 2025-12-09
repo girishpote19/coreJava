@@ -1,0 +1,89 @@
+1. String pool -
+The java String constant pool is special memory area inside the HEAP memory that stores string literals.
+when JVM run hota hai :
+. first its checks string already present hai in string pool.
+. if yes it reuses existing string refrrence
+. if no it creates new string object in the string pool
+
+iske karan lot of memory save hota hai by reusing immutable string object.
+
+🌟 String Pool म्हणजे काय?
+
+JVM मध्ये Heap मेमरीत एक खास जागा असते → String Constant Pool (SCP).
+
+इथे String literals फक्त एकदाच साठवले जातात.
+
+जेव्हा तू String s1 = "Hello"; असे लिहितोस, तेव्हा JVM पाहते:
+
+Pool मध्ये "Hello" आधीपासून आहे का?
+
+असेल → त्याचाच reference देईल
+
+नसेल → नवीन literal pool मध्ये ठेवेल
+
+example :
+String s1 = "Java";
+String s2 = "Java";
+
+येथे JVM String Pool मध्ये "Java" फक्त एकदाच साठवते.
+
+s1 आणि s2 दोघेही त्याच String object कडे point करतात.
+
+❌ परंतु new keyword वापरल्यास
+String s3 = new String("Java");
+हे नेहमी नवीन Object तयार करते (Heap मध्ये),
+म्हणून String Pool चा फायदा होत नाही.
+
+👍 String Pool का वापरतात?
+
+मेमरी वाचवण्यासाठी
+
+performance सुधारण्यासाठी
+
+duplicate string objects टाळण्यासाठी
+
+1. Why are Strings Immutable in Java?
+Strings are Immutable means their values cannot changed once created, If you try to change a string value using its functions like concat() or replace() , a new string object is created instead of modifying original one.
+
+✅ 1. Security (सुरक्षेसाठी सर्वात मोठे कारण)
+
+Strings वारंवार खालील ठिकाणी वापरले जातात:
+
+File path
+
+Username/password
+
+Database connection URL
+
+Network connections (IP, port)
+
+जर Strings mutable असते, तर कुणीही त्या values run-time ला बदलू शकत होते → Security breach.
+
+✔ Example:
+Connection(URL) जर URL मध्ये कुणी runtime ला बदल केला तर application crash किंवा hacking शक्य.
+
+✅ 2. Thread Safety (No need for synchronization)
+
+Strings immutable असल्यामुळे:
+
+Two threads एकाच String वापरत असले तरी conflict होत नाही
+
+Because value बदलतेच नाही
+
+✅ 3. Caching and Hashcode stability
+
+Strings चा hashCode() value त्याच्या content वर अवलंबून असतो.
+
+जर String mutable असते:
+
+value बदलेल → hashcode बदलेल
+
+HashMap / HashSet मधून object हरवेल (corruption)
+
+Immutable असल्यामुळे:
+
+hashcode स्थिर राहतो
+
+त्यामुळे Strings efficient keys बनतात (HashMap keys म्हणून सर्वात जास्त वापरतात)
+
+4. Performance Optimization: saves memory and improves speed.

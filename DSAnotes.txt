@@ -87,3 +87,23 @@ hashcode स्थिर राहतो
 त्यामुळे Strings efficient keys बनतात (HashMap keys म्हणून सर्वात जास्त वापरतात)
 
 4. Performance Optimization: saves memory and improves speed.
+
+Q.3 what is the diff betn creating a string using new() and as a literal?
+creating string by using new() keyword its create new obj of that string in Heap memory area even if that value is already present in the heap memory.
+Ex: String s1 = "hello";
+	String s2 = new String ("hello"); // s1 == s2 FALSE ,its create new obj in heap mem.
+	
+and string literal means when JVM starts first its check the string refrence value is already present inside the string constant pool which is small part of heap memory area , if yes then it will use the same refrence value, else its create new refrence inside string constant pool , so its improves application performance save memory.
+Ex: String s1 = "hello";
+	String s2 = "hello"; //s1 == s2 TRUE . String variable S1 value already present so String variable s2 point to the same value without creation new string with value.
+	
+Q.4 what is Collection framework?
+Collection framework is set of classes and interfaces which provides us ready made data structures to store and manipulate group of objects.
+its from java.util.* pkg
+Collection is Interface which is having subinterfaces List, set , Queue
+
+Q.4 what is diff betn ArrayList and LinkedList?
+ArrayList is a dynamic array that can grow or shrink as needed Insertion operation slow. while LinkedList is doubly linked list that allow fast insertion and deletion of the elements, Insertion operation is fast .
+
+Q.5 what is diff betn HashMap and TreeMap?
+HashMap is hashtable that stores key-value pairs, while TreeMap is red-black tree that stores key-value pairs in sorted order.

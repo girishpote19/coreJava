@@ -232,6 +232,8 @@ void increment() {
 
 We use synchronized blocks to improve the app performance by locking only required code instead of locking entire method.
 
+realtime project : used in authenticationService , schedulersClasses for run schedulers jobs.
+
 2. What is Volatile keyword?
 Problem: 
 If two threads accessing the variables , one thread may not see updated immediately because threads store variables in CPU cache.

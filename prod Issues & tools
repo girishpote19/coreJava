@@ -1,0 +1,69 @@
+================================================================================================================================================================
+1. CPU Utilization showing 100 % due to AuditQueueOverFlow Queue is overloaded and threads are going into the waiting/parking states 
+================================================================================================================================================================
+In Application for Audit process (users visiting any links on frontEnd) it works on Producer -- Consumer pattern. 
+producer -- cbci app --> insert data in the queue
+consumer -- AuditQueueOverFlow --> consume the data from Q & store it in db
+
+=> Root Cause : 
+AuditQOverFlowSize = 35 And queueSize = 6000 (thread config maintain in code)
+
+1) Consumer --> AuditQ OverFlowSize we have kept in code level = 35 --> as per the logic Thread will process to save the records in DB once queue size > 35 . --> thread is waiting until 35 records and process 35 records batch after the condition satisfied (its time consuming and Utilizing high CPU).
+
+2) Producer--> QueueSize = 6000 --> due to the heavy load on application QueueSize reached to the its max capacity and results the Q going into the blocked state.
+
+==> Fix :
+
+1) reduced AuditQOverFlowSize (consumer) = 30 (small batches will take less time to store in DB and less CPU usage)
+
+2) Increased QueueSize = 7000 -> avoid blocking in case of heavy load on app.
+
+3) Producer - Consumer will able to maintain there Load balance now and application is stable and responsive in heavy load and low cpu utilization.
+
+================================================================================================================================================================
+2. Slowness issue in frontEnd page
+================================================================================================================================================================
+==> Root Cause :
+	In application for view dispute screen page, if have more than 10 records the page was taking more than 5 secs to load that page :
+
+==> Analysis :
+	Analyzed code logic , as per that we were fetching the records from the CHARGEDBACK_RESPONSE table based on filter DISPUTE_CASENo but didnt added INDEX on DISPUTE_CASENo column , and its cozing high query cost for fetch records from that table
+
+==> Fix :
+		We have added Index on column DISPUTE_CASENo query cost reduced / optimized query and view dispute screen page is working fine with more than 10 records.
+		
+
+===========================
+DR activity 
+Invalid objects in DB 
+AppSecurity issues 
+CSP headers, HTTP Host Header Injection ,Cross Site Scripting
+Slowness in application UI - 
+Deployment on UAT , and guide to the deployment team
+fix prod bug issues reported by client and provide justification
+ 
+===============================
+
+
+✅ AppDynamics Scenario (Simple Version)
+Issue:
+“The mini-statement page was loading slowly.”
+What I did:
+“In AppDynamics, I checked Business Transaction snapshots and saw multiple DB calls for each record.”
+Fix:
+“We changed it to fetch all records in one query and added caching.”
+Impact:
+“Response time dropped significantly.”
+Interview Answer (10–15 sec):
+“In AppDynamics, I found multiple DB calls causing slowness on the mini-statement page. We optimized it to one query and added caching, which improved speed.”
+
+
+✅ Ansible Script Scenario
+Issue:
+“We had to update a config file on 5 servers.”
+What I did:
+“I wrote a simple Ansible task to replace a property in application.properties and restart the app.”
+Impact:
+“Instead of logging into each server, one command updated all configs.”
+Interview Answer (10–15 sec):
+“I wrote an Ansible script to update application properties and restart the service on multiple servers in one go, which reduced manual effort.”

@@ -1,0 +1,18 @@
+Introdcution
+About my projects
+roles and responsibilities
+major tasks and daily routine
+
+coreJava
+oops
+java8features
+collectionFW
+exceptionHandling
+multithreading
+springMVC/ boot
+REST/ microservices
+DB
+devops basics
+
+Ansible basic , scripts ,jenkins
+Linux ,Dynatrace, Grafana, Prometheus.

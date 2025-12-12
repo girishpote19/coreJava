@@ -1,17 +1,19 @@
 Introduction
-Hello Good Morning , My name is Girish Gajanan Pote , I am living in mumbai mulund , I have completed my bachelors of engineering degree from saraswati college of engineering kharghar, about my experience currently I am working In capgemini as associate consultant and I have total 4 years of experinece in Java production support , In spring MVC as well as Spring boot Framework projects i have worked.
-Currently I am working on Banking domain project of HDFC bank - Card Business Customer Interface , about this project so its internal java web application use by the HDFC call center team for customer credit cards related queries like applying loan , disbursement, EMI, raising disputes and so on. 
+Hello Good Morning , My name is Girish Gajanan Pote , I am living in mumbai mulund , I have completed my bachelors of engineering degree from saraswati college of engineering kharghar, about my experience currently I am working In capgemini as associate consultant and I have total 4 years of experinece in Java production support in Banking financial services domain.
+Currently I am working on HDFC bank - Card Business Customer Interface , about this project so its internal java web application use by the HDFC call center team for customer credit cards related queries like applying loan , disbursement, EMI, raising disputes and so on. 
 about the project architcutre we use java programming lang 8 with Spring MVC 5.1.5 as framework , Backend DB we are using oracle and also there is one mainFrame visionplus DB from there also we are fetching the data via MQ (messaging queue) MQ server for enabling communication with VisionPlus (on mainframe) .Total we had 12 JVM's and which was distributed on 4 differnet servers and deployed on WAS server also implemented Netscalar loadbalancer which routes to the 4 app servers. 
 coming to my day to day responsibilities include fixes the bugs prod issues reported by the client as per the priority.
-daily basis verify the application logs , share imp bank reports with client as per there request, deploy the latest WAR files on WAS server UAT, run CICD pipeline after new commits, generate Sonar reports and share with client, check app vulnerabilities , fix code bugs and code smells, check CPU utilization, maintain all prod issues technical documenations for future help and so on. 
+daily basis verify the application logs , run scripts and share imp bank reports with client as per there request, dump audit data, deploy the latest WAR files on WAS server UAT, run CICD pipeline after new commits, generate Sonar reports and share with client, check app vulnerabilities , fix code bugs and code smells, check CPU utilization, provide production movements support, maintain all prod issues technical documenations for future help and so on. 
 apart from this I lead and sucessfully completed DR drill which was mandtory by RBI gudlines in very tight deadlines with minimum issues and application availability to client in very less down time Client appricated to us for it.
 Apart from this i helped devlopers to write junits then create jsp pages implement small functionalities eg add new button or fields on screen write DB quries from fetch data from backend and so on.
+Additionally, I successfully led and completed a Disaster Recovery (DR) drill mandated by RBI guidelines within tight deadlines, ensuring minimal downtime and high application availability. The client appreciated our efforts.
+
 =============================================
 
 Introduction
 Hello, good morning! My name is Girish Gajanan Pote. I live in Mulund, Mumbai. I have completed my Bachelor’s degree in Engineering from Saraswati College of Engineering, Kharghar.
-Currently, I work at Capgemini as an Associate Consultant, and I have 4 years of experience in Java Production Support. I have worked on projects using Spring MVC and Spring Boot frameworks.
-At present, I am working on a Banking domain project for HDFC Bank – Card Business Customer Interface. This is an internal Java web application used by the HDFC call center team to handle customer credit card queries such as loan applications, disbursements, EMI setups, dispute management, and more.
+Currently, I work at Capgemini as an Associate Consultant, and I have 4 years of experience in Java Production Support in Banking financial services domain.
+At present, working on project HDFC Bank – Card Business Customer Interface. This is an internal Java web application used by the HDFC call center team to handle customer credit card queries such as loan applications, disbursements, EMI setups, dispute management, and more.
 Project Details:
 
 Technology: Java 8, Spring MVC 5.1.5

@@ -37,6 +37,7 @@ AuditQOverFlowSize = 35 And queueSize = 6000 (thread config maintain in code)
 DR activity 
 Invalid objects in DB 
 AppSecurity issues 
+Updating shell scripts for Reports
 CSP headers, HTTP Host Header Injection ,Cross Site Scripting
 Slowness in application UI - 
 Deployment on UAT , and guide to the deployment team

@@ -107,3 +107,12 @@ ArrayList is a dynamic array that can grow or shrink as needed Insertion operati
 
 Q.5 what is diff betn HashMap and TreeMap?
 HashMap is hashtable that stores key-value pairs, while TreeMap is red-black tree that stores key-value pairs in sorted order.
+
+Q.6 what is the diff betn interator and a ListIterator?
+Iterator is used to travese a collection in a forward direction, while ListIterator is used to travese a list in both forward and backward directions.
+
+Q.7 what is diff betn HashSet and TreeSet?
+Hashet can store elements in unorder format and avoid duplicate elements , null value is fine, while TreeSet can stores elements in sorted order, avoid duplicate elements and No Null value is fine its throw NP exception.
+
+Q.8 What is the purpose of the Comparable interface?
+its provides a natural ordering for class. its override compareTo() method that compares the objects of the same class and return a negative integer, zero or a positive integer depending on wheteher the current obj is less than , equal or greater than the other object.

@@ -16,3 +16,8 @@ devops basics
 
 Ansible basic , scripts ,jenkins
 Linux ,Dynatrace, Grafana, Prometheus.
+
+
+maja manager sutti vr gelay 10-12 days
+
+workload jast ahe 

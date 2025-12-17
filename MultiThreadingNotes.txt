@@ -287,3 +287,52 @@ Thread Pool executing task 4 and 5
 
 RealTimeProject example :
 in EmailSending method we used threadPool for trigger mail asynchrously and write memo in DB.
+
+=============
+Q1. what is thread and what are the diff stages in its lifecycle?
+Thread is smallest unit of process, which executed independently.
+
+new state , runnable state, running state, waiting state, dead state.
+
+Q.2 what is the diff betn process and thread?
+Process means program in execution and Thread means its a part of the process.threads shares memory while process do not share.
+
+Q.3 what is diff types of thread priorities available in java?
+there are total 3 diff types of priority available in java. 
+MIN_PRIORITY: Integer val 1.
+NORM_PRIORITY: Integer val 5.
+MAX_PRIORITY: Integer val 10
+
+Q.4 What is context switching in java?
+conext switching is the process where CPU saves the state of one thread and restores the state of another thread to enable multitasking in java.
+Context Switching म्हणजे CPU एका वेळी चालू असलेला एक thread थांबवून दुसरा thread चालवतो, तेव्हा पहिल्या thread ची current state (context) save केली जाते आणि दुसऱ्या thread ची state restore केली जाते.
+example:
+class MyThread extends Thread {
+    public void run() {
+        System.out.println(Thread.currentThread().getName());
+    }
+}
+
+public class Test {
+    public static void main(String[] args) {
+        MyThread t1 = new MyThread();
+        MyThread t2 = new MyThread();
+
+        t1.start();
+        t2.start();
+    }
+}
+➡ CPU t1 आणि t2 मध्ये context switching करत output देतो
+➡ Output order fix नसतो
+
+Q.5 what is the diff betn user threads and Daemon threads?
+User threads perform the main application tasks and keep the JVM alive example main() thread. whereas daemon threads run in the background and terminate automatically when all user threads tasls finish its execution example: GC
+
+Q.6 what is synchronization?
+Synchronization ensures that only single thread can access the shared resource at time and maintain the data properly without any data corruption.
+
+Q.7 what is deadlock?
+Deadlock is the situation where every thread is in waiting state and the shared resource which is occupied by the thread that is also went into the wait state so no one will get the shared resource such type of situation is called Deadlock.
+
+Q.8 what is use of wait() and notify() method.
+wait() method is from java object class and pause the execution of thread until another thread can call notify() notifyAll() methods.

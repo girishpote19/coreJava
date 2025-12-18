@@ -326,7 +326,7 @@ public class Test {
 ➡ Output order fix नसतो
 
 Q.5 what is the diff betn user threads and Daemon threads?
-User threads perform the main application tasks and keep the JVM alive example main() thread. whereas daemon threads run in the background and terminate automatically when all user threads tasls finish its execution example: GC
+User threads perform the main application tasks and keep the JVM alive example main() thread. whereas daemon threads run in the background and terminate automatically when all user threads tasks finish its execution example: GC
 
 Q.6 what is synchronization?
 Synchronization ensures that only single thread can access the shared resource at time and maintain the data properly without any data corruption.

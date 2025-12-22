@@ -458,211 +458,38 @@ Used to mark a class eligible for serialization (converting object → byte stre
 class Employee implements Serializable { }
 
 ===============================================================================
-MULTITHREADING
+9. What is Singleton Class in Java?
+Singleton class mhanje ashi class jyacha purna application madhe fakta ekach object (instance) tayar hoto aani to object sarv thikani shared vaprla jato.
 
-1. What is multithreading?
-Multithreading allows us to execution of mutliple threads simultaneusly , thread is the smallest unit of the process which can get executed independently , multithreading helps us to improve the performance of the application.
-2. We can achive mutiplethreading in java by 2 ways :
- by extending Thread class and override its run () method 
- ex: 
- class MyThread extends Thread {
-	public void run() { }
-		MyThread my = new MyThread();
-		my.start();
-		}
- by implementing Runnable interface override its run method ,passed its instance as thread constructor.
- ex:
- class MyRunnable implements Runnable {
-	public void run () {}
-	MyRunnable my = new MyRunnable();
-	Thread thread = new Thread(my);
-	thread.start();
-	
-3. Why Multithreading?
-Interviewers expect you to say:
+Singleton ka vapartat?
+. DB connection
+. loggers
 
-1. Better CPU Utilization
+🧱 Singleton Class कशी तयार करतात?
 
-Threads run in parallel, keeping CPU busy.
+Singleton साठी 3 main rules पाळावे लागतात:
 
-2. Faster Execution
+1️⃣ Constructor private असतो
+➡ बाहेरून new वापरून object बनवता येऊ नये
 
-Multiple tasks run simultaneously.
+2️⃣ Static variable
+➡ एकच instance साठवण्यासाठी
 
-3. Improved Application Performance
+3️⃣ Public static method
+➡ object मिळवण्यासाठी (global access point)
 
-Background tasks (logging, file upload, audit queue processing, etc.) run without blocking main logic.
+Example: Java Singleton Class Syntax
+class SingletonExample {
 
-4. Used in Real Projects
+   // private field that refers to the object
+   private static SingletonExample singleObject;
+                                              
+   private SingletonExample() {
+      // constructor of the SingletonExample class
+   }
 
-Producer–Consumer
-
-WebServer handling multiple requests
-
-Async tasks (email/SMS sending)
-
-Thread pool executor in Spring
-
-🟦 Step 1: What is a Thread? (Basic Foundation)
-👉 Simple definition:
-
-A thread is like a small worker inside your program that performs a task.
-
-💡 Real-Life Example:
-
-Imagine you have a kitchen with:
-
-1 cook → single-thread
-
-3 cooks → multi-thread
-
-More cooks = more work done in parallel.
-
-🧠 In Java:
-
-A Java program normally has multiple threads:
-
-Main thread – runs your main method
-
-GC thread – runs garbage collector
-
-User defined threads – you create them
-
-🟦 Step 2: Why do we need Threads?
-Without threads:
-
-Your program works one task at a time.
-
-With threads:
-
-Your program can do multiple tasks at the same time.
-
-Real Example:
-
-A web server:
-
-Thread1 → login request
-
-Thread2 → payment request
-
-Thread3 → fetch profile
-
-Thread4 → send OTP
-
-So each request gets its own thread.
-
-🟦 Step 3: How to create a Thread? (Very Easy)
-
-There are 2 ways.
-
-Way 1 → Extending Thread class
-class MyThread extends Thread {
-    public void run() {
-        System.out.println("Thread is running...");
-    }
+   public static SingletonExample getInstance() {
+      // write code that allows us to create only one object
+      // access the object as per our need
+   }
 }
-
-public class Test {
-    public static void main(String[] args) {
-        MyThread t = new MyThread();
-        t.start(); // starts new thread
-    }
-}
-
-🔥 Important:
-
-start() → starts a new thread
-
-run() → contains the code to execute
-
-Never call run() manually
-
-Way 2 → Implementing Runnable (Best method)
-class MyTask implements Runnable {
-    public void run() {
-        System.out.println("Task running...");
-    }
-}
-
-public class Test {
-    public static void main(String[] args) {
-        Thread t = new Thread(new MyTask());
-        t.start();
-    }
-}
-
-Why Runnable is better?
-
-Because Java doesn’t allow multiple inheritance.
-You can extend one class only, so using Runnable is flexible.
-
-🟩 Step 4: Thread Lifecycle (Very Important)
-
-Threads go through different states:
-
-NEW → RUNNABLE → RUNNING → WAITING/BLOCKED → TERMINATED
-
-Simple explanation:
-
-NEW: thread object created
-
-RUNNABLE: start() is called but waiting for CPU
-
-RUNNING: using CPU
-
-WAITING: sleeping/waiting for lock
-
-TERMINATED: done
-
-🟦 Step 5: Thread Methods (Very Simple Today)
-Method	What it does
-start()	start new thread
-run()	thread task
-sleep(1000)	pauses thread
-join()	wait for other thread
-yield()	give chance to others
-interrupt()	interrupt sleeping thread
-🟧 Step 6: Understanding Race Condition (Very Important)
-What is race condition?
-
-When two or more threads try to modify the same data at same time, data becomes inconsistent.
-
-Example:
-
-Two threads increasing balance:
-
-Thread1: balance = balance + 100
-Thread2: balance = balance + 100
-
-
-Result might be:
-
-200
-
-OR 100
-
-OR wrong value
-
-This is where synchronization comes.
-
-🟥 Step 7: Synchronization (Beginner Level Today)
-Definition:
-
-Synchronization means only one thread can access code at a time.
-
-synchronized void increment() {
-    count++;
-}
-
-
-This prevents data corruption.
-
-🟦 Today’s Summary (You learned):
-
-✔ What is a thread
-✔ Why use threads
-✔ How to create threads
-✔ What is run() & start()
-✔ Thread lifecycle
-✔ Race condition
-✔ Basic synchronization

@@ -464,6 +464,7 @@ Singleton class mhanje ashi class jyacha purna application madhe fakta ekach obj
 Singleton ka vapartat?
 . DB connection
 . loggers
+. thread pool
 
 🧱 Singleton Class कशी तयार करतात?
 
@@ -493,3 +494,5 @@ class SingletonExample {
       // access the object as per our need
    }
 }
+
+https://javatechonline.com/singleton-class-in-java-with-examples/

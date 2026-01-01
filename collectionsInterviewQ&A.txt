@@ -1,0 +1,36 @@
+1) Why is HashMap preferred over Hashtable even today?
+
+HashMap is preferred over Hashtable because it offers better performance due to no unnecessary synchronization, supportss null keys and values and provides flexibility to handle concurrency using modern alternatives like ConcurrentHashMap.
+
+HashMap is Preffered over Hashtable - why?
+1️⃣ Performance (सर्वात मोठं कारण)
+. Hashtable madhe sagle methods synchronized astat.
+. tyamule pratek operation la lock lagto.
+. Result - Slow performance
+. HashMap default synchronized nahi.
+. Single-thread/ low concurrency so khup fast.
+tyamule aajahi developers HashMap vaprtat.
+
+2️⃣ Unnecessary synchronization नाही
+. Hashtable - Full class level synchronization
+. tula synchronization nako asli tarihi forced karte.
+. HashMap -> synchronization havi ka nako - developers decide karto.
+			. Collections.synchronizedMap()
+			. Or ConcurrentHashMap
+. better performance and flexibility.
+
+3️⃣ Null values support
+. HashMap: 
+	- 1 null key allowed
+	- Multiple null values allowed
+. Hashtable:
+	- no null key
+	- no null value
+➡ Real projects मध्ये null handling खूप common आहे
+
+Better alternatives available
+जर thread safety हवी असेल तरीही:
+ConcurrentHashMap
+Collections.synchronizedMap(new HashMap<>())
+➡ Hashtable वापरण्याची गरजच राहत नाही
+➡ Hashtable आता outdated मानली जाते

@@ -31,6 +31,16 @@ AuditQOverFlowSize = 35 And queueSize = 6000 (thread config maintain in code)
 
 ==> Fix :
 		We have added Index on column DISPUTE_CASENo query cost reduced / optimized query and view dispute screen page is working fine with more than 10 records.
+
+Facing slowness issue on dispute screen when having more than 10 records 
+
+1 - we have checked the application logs for that time frame but didnt find any exception or errors logs was fine.
+2 - we start debugging that issue first we identify which source .jsp page we are calling for the dispute screen functionality by dev tools on browser.
+3 - we found the source then we check in code base for same and check which controller is calling that .jsp page 
+4 - found the controller then we backtrace the hirerchy call like Controller -> service layer -> DAO layer 
+5 - at DAO layer we found the query from which we are fetching the data from orcale DB 
+6 - so we found RCA they query we are using there having one disputeCaseNo column on that column we havent added any index which cozing high query cost with more records and due to which front end screen taking more time to load the page.
+7 - FIX : we implemented the Index on DisputeCaseNo column so query cost reduces and now its exceuting very quickly with more than 10 records also 
 		
 
 ===========================

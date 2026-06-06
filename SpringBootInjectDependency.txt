@@ -1,0 +1,64 @@
+1) Spring Boot Inject Dependency
+Interview Answer
+
+Dependency Injection (DI) means ek object ko apni dependency khud create nahi karni padti, Spring container automatically provide karta hai.
+
+Without DI:
+
+public class UserService {
+    UserRepository repo = new UserRepository();
+}
+
+Problem:
+
+Tight coupling
+Testing difficult
+
+With DI:
+
+@Service
+public class UserService {
+
+    private final UserRepository repo;
+
+    @Autowired
+    public UserService(UserRepository repo) {
+        this.repo = repo;
+    }
+}
+
+Spring automatically UserRepository object create karke UserService me inject karega.
+
+Types of Dependency Injection
+1. Constructor Injection (Recommended)
+@Service
+public class UserService {
+
+    private final UserRepository repo;
+
+    public UserService(UserRepository repo) {
+        this.repo = repo;
+    }
+}
+
+Most preferred because:
+
+Immutable dependency
+Easy unit testing
+2. Field Injection
+@Autowired
+private UserRepository repo;
+
+Easy but not recommended.
+
+3. Setter Injection
+@Autowired
+public void setRepo(UserRepository repo) {
+    this.repo = repo;
+}
+
+Used when dependency optional ho.
+
+Real Project Example
+
+"Hamare project me service class ko DAO/Repository object ki requirement hoti hai. Spring Boot startup ke time required bean create karta hai aur service class me inject kar deta hai."

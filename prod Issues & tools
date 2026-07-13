@@ -41,7 +41,96 @@ Facing slowness issue on dispute screen when having more than 10 records
 5 - at DAO layer we found the query from which we are fetching the data from orcale DB 
 6 - so we found RCA they query we are using there having one disputeCaseNo column on that column we havent added any index which cozing high query cost with more records and due to which front end screen taking more time to load the page.
 7 - FIX : we implemented the Index on DisputeCaseNo column so query cost reduces and now its exceuting very quickly with more than 10 records also 
-		
+
+=================================================================================================================================================================
+3. Production Issue: Customers Receiving the Same Email Three Times
+=================================================================================================================================================================
+Problem Statement
+
+In production, customers reported that they were receiving the same email three times instead of once.
+
+Application Flow
+
+Our application uses cron jobs configured in the gui.properties file. These schedulers automatically trigger different functionalities at predefined intervals. The email scheduler was configured to execute every 30 minutes.
+
+Investigation
+
+The scheduler was running on the .52 application server, which had three JVM instances. To identify the root cause, we added additional debug loggers in the code and deployed the changes to the UAT environment for testing.
+
+During analysis, we observed that every time the email scheduler was triggered, it executed simultaneously on all three JVMs. Since each JVM independently picked up the same email records, the same email was processed and sent three times to customers.
+
+Root Cause
+
+The scheduler was active on all three JVMs of the same server, resulting in duplicate processing of the email jobs.
+
+Solution
+
+We implemented a flag-based scheduler execution mechanism.
+
+At the code level, we introduced an isScheduler flag and enabled it only for JVM-1 on the .52 server. The flag was disabled for the remaining JVMs.
+
+As a result, only JVM-1 executes the email scheduler every 30 minutes, while the other JVMs continue serving application requests without triggering the scheduler.
+
+Result
+Duplicate email issue was completely resolved.
+Customers started receiving only one email per scheduled execution.
+Scheduler execution became controlled and consistent across the clustered environment.
+The fix was validated in UAT and successfully deployed to Production.
+
+RAW - 2. Customers receiving same emails 3 time send hora tha 
+
+application ke gui properties me humne cronjob schedule kiye hai to ye cron job uske schedule time ke anusar functionality trigger karega automatically, so for email functionality also we have scheduled cron job and o har 30 mins ke baad run hota hai, 
+to ye scheduler run hote hai .52 vale server pe waha pe 3 JVM hai , to for findout the RCA about this issue we added extra debug loggers in code level and tested in UAT , to hume identify hua ki jab emailScheduler trigger hota hai every 30 mins to ye .52 ke 3 JVM's pr run hota hai and uske karan customer ko 3 time emails send hore hai.
+
+solution - to humne flag based approch implement kiya, code level pe scheduler ke chnages kiye and only .52 ke jvm 1 pe isScuelr flag enable kiya uske karan abhi sirf emailScheduler .52 ke JVM1 se run hoga and issue is got fix.
+
+=================================================================================================================================================================
+4 . **Production Issue: Dispute Report Not Generating After New Feature Deployment**
+=================================================================================================================================================================
+
+### Problem Statement
+
+After a new feature deployment in the Production environment, the **Dispute Report** was not getting generated through the scheduled Autosys job. However, the same functionality was working correctly in the UAT environment.
+
+### Investigation
+
+To identify the root cause, we first compared the Production deployment with UAT and verified all the components that were part of the release.
+
+The deployment included:
+
+* Application code changes
+* Database changes
+* Shell script changes for report generation
+
+We validated each component one by one.
+
+* The application code deployment was correct.
+* Database changes were successfully applied.
+* Finally, while verifying the shell scripts on the Production server, we identified the issue.
+
+### Root Cause
+
+The updated shell script responsible for generating the dispute report had been replaced during deployment, but the required **execute permission** was not assigned to the new script.
+
+Because of the missing execution permission, the Autosys job was unable to execute the shell script, resulting in report generation failure.
+
+### Solution
+
+We assigned the required execute permission to the shell script using the appropriate Linux command and verified the Autosys job execution.
+
+After the permission was updated, the Autosys job executed successfully, and the dispute report was generated as expected.
+
+### Result
+
+* The dispute report generation issue was resolved.
+* Autosys jobs started executing successfully.
+* Report generation was restored without requiring any code changes.
+* We also recommended including file permission verification as part of the deployment checklist to avoid similar issues in future releases.
+
+RAW - 
+3. In application bank imp report generating through autosys jobs issue is after the new feature implementation dispute report was not generating but in UAT its working fine, so humne first  new feature deployment me kya kya file changes the o verify kiye , 
+to for dispute report generation there are some code/db and shell script level changes done by development team , code and DB changes me sab ok tha main issue shell script me tha after 
+replacing the dispute report file in prod server o file ko required permission set nahi kiye the uske karn Autosys job o dispute report vali shell script execute nahi kar para tha after giving the required permission o report properly genetrate hone laga.
 
 ===========================
 DR activity 

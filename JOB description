@@ -1,0 +1,98 @@
+Java Development (Mandatory)
+
+
+Strong hands-on Java development experience (5+ years preferred).
+Excellent understanding of:
+Core Java
+Collections Framework
+Multithreading & Concurrency
+Exception Handling
+JVM Internals
+Memory Management & Garbage Collection
+Java 8+ Features (Streams, Lambda, Functional Interfaces)
+Ability to debug, enhance, and fix production code independently.
+Experience with Spring Boot and REST APIs.
+Coding & DSA (Mandatory)
+
+Candidates must be able to clear coding rounds.
+
+Expected topics:
+
+Arrays
+Strings
+HashMap / HashSet
+Linked Lists
+Stack & Queue
+Trees
+Searching & Sorting
+Recursion
+Time & Space Complexity
+Sample coding questions:
+
+First Non-Repeating Character
+Reverse Linked List
+Log/IP Frequency Analysis
+Top K Frequent Elements
+Two Sum
+Longest Substring Without Repeating Characters
+Anagram Detection
+Frequency Sort String
+Production Engineering / L3 Ownership
+
+Complete ownership of production applications.
+Incident Management (P1/P2/P3).
+Root Cause Analysis (RCA).
+Application monitoring and observability.
+Performance analysis and tuning.
+Deployment and release support.
+SQL (Mandatory)
+
+Strong SQL query-writing capabilities.
+Multiple table joins.
+Aggregate functions.
+Window functions.
+Query optimization.
+Indexing concepts.
+Execution plans.
+Deadlock troubleshooting.
+Linux & Shell Scripting (Mandatory)
+
+Daily Linux troubleshooting.
+Process monitoring.
+Log analysis.
+Shell scripting for automation.
+Commands:
+
+top
+ps
+grep
+awk
+sed
+find
+netstat/ss
+tail
+AI Coding Experience (Mandatory)
+
+Hands-on experience with:
+
+GitHub Copilot
+Claude Code
+Cursor AI
+Amazon Q
+Similar AI coding assistants
+Should demonstrate:
+
+AI-assisted development
+AI-assisted debugging
+Test case generation
+Code review support
+Productivity improvements
+AWS / Cloud (Preferred)
+
+EC2
+S3
+RDS
+CloudWatch
+IAM
+Auto Scaling
+Lambda

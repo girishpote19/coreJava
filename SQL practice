@@ -1,0 +1,23 @@
+https://sql-editor.programiz.com/
+
+-- Online SQL Editor to Run SQL Online.
+-- Use the editor to create new tables, insert data and all other SQL operations.
+  
+--SELECT *FROM Customers;
+
+--Insert into customers (customer_id, first_name, age, last_name, country) values(6,'girish',26,'pote','INDIA');
+
+--update customers set age = 25 where customer_id = 6;
+
+--delete from customers where first_name = 'girish';
+
+--select age , count(*) as same_age from customers group by age having age > 25 order by age desc ;
+
+--select customers.customer_id, customers.first_name, orders.item, orders.amount from customers 
+--join orders ON customers.customer_id = orders.customer_id;
+
+
+select customers.customer_id, customers.first_name, shippings.* , orders.* from customers 
+INNER JOIN shippings on customers.customer_id = shippings.customer
+INNER JOIN orders on customers.customer_id = orders.customer_id;
+

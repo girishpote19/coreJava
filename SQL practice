@@ -25,6 +25,6 @@
 select * from customer_info_view;
 --drop view customer_info_view;
 
-
+ACID = Atomicity (All or Nothing), Consistency (Valid Data), Isolation (No Transaction Interference), Durability (Committed Data is Permanent).
 
 

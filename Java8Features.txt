@@ -1,0 +1,63 @@
+Java 8 features
+
+1) Lambda expression - 
+
+i. Lambda expression provides implementation to the functional interface. Reduces the code size to short.
+ii. Lambda expression is annonomuys function.Function doesnt have any name and not belongs to any of the class.
+iii. Syntax : (parameters) -> (body/expression);
+
+2) Functional Interface -
+i. The Interface which contains only single abstract method which is called as Functional interface.
+ii We have to use @FunctionalInterface annotation on top of that interface its optional thing.
+iii. We can have N number of default & static method inside functional interface
+iv. Predefined FunctionalInterface are : Runnable Interface , Predicate, function, consumer, supplier, Bi predicate, Bi function, Bi consumer. 
+
+3) Method Reference -
+i. Method reference helps to point to that method by their names.
+ii. there syntax is "::" between class name and method name.
+ii. its shortcut to calling method by using classname::methodName or objectName::MethodName
+iv. There are 3 types of the method reference - Referenceto the static method (System.out::println), Reference to the Instance method(abc::learning()), Reference to the constructor using new operator (className::new).
+
+4) Default Method -
+i. Java 8 Introduces default methods inside the functional interface so with the help of that we can create concurrent methods inside the functional Interfaces.
+ii. Default Method required to provide body implementation inside the interface
+interface TestInterface
+{
+    // abstract method
+    public void square(int a);
+
+    // default method
+    default void show()
+    {
+      System.out.println("Default Method Executed");
+    }
+}
+
+5) Optional - 
+i. Optional is public final class which is used to deal with null pointer exception .
+ii. optional is container which contain not null obj.
+iii. its from java.util PKG
+iv. Optional<String> name = Opptional.ofNullable(name);
+
+6) Date/Time API -
+i. its from java.time pkg
+ii. its thread safe and immutable
+ii. there are two types local and zoned date time.
+ii. when we have to deal with local date time zone we go with local else we use zoned date/time .
+
+7) Stream API -
+i. its from java.util.stream pkg
+ii. A Stream is a sequence of elements on which we can perform diff functional operations like FILTER, SORT, MAP, COLLECT, LIMIT, PRINT, FIND..
+iii. Also its supports converion of list to set, list to map and vice versa.
+iv.Unlike Collections, a Stream does not store/modify the data it only processes it.
+v. aapn functional programming features like LAMBDA EXPRESSION, METHOD REFERENCE use kru shkto in stream API for data processing
+vi. 2 types of Sream API : sequential(single thread) , parallel stream (multithreads)
+v. keep the code short and clean
+	
+Intermediate operations transform a stream into another stream. Some common intermediate operations include:
+
+filter(): Filters elements based on a specified condition.
+map(): Transforms each element in a stream to another value.
+Sorted(): Sorts the elements of a stream.
+Distinct(): Remove duplicates.
+Skip(): Skip first n elements.

@@ -10,7 +10,8 @@ iii. Syntax : (parameters) -> (body/expression);
 i. The Interface which contains only single abstract method which is called as Functional interface.
 ii We have to use @FunctionalInterface annotation on top of that interface its optional thing.
 iii. We can have N number of default & static method inside functional interface
-iv. Predefined FunctionalInterface are : Runnable Interface , Predicate, function, consumer, supplier, Bi predicate, Bi function, Bi consumer. 
+iv. Predefined FunctionalInterface are : Runnable Interface , 
+V. Types of the Functional Inteface: Predicate, function, consumer, supplier, Bi predicate, Bi function, Bi consumer. 
 
 3) Method Reference -
 i. Method reference helps to point to that method by their names.
@@ -20,6 +21,7 @@ iv. There are 3 types of the method reference - Referenceto the static method (S
 
 4) Default Method -
 i. Java 8 Introduces default methods inside the functional interface so with the help of that we can create concurrent methods inside the functional Interfaces.
+ii. we have to used default keyword before the method name inside interface.
 ii. Default Method required to provide body implementation inside the interface
 interface TestInterface
 {

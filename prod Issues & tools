@@ -132,6 +132,14 @@ RAW -
 to for dispute report generation there are some code/db and shell script level changes done by development team , code and DB changes me sab ok tha main issue shell script me tha after 
 replacing the dispute report file in prod server o file ko required permission set nahi kiye the uske karn Autosys job o dispute report vali shell script execute nahi kar para tha after giving the required permission o report properly genetrate hone laga.
 
+
+===========================
+NIGHT TIME PROD ISSUE FIX
+During night period Dynatrace alerts was started and in TXN services response time was too high almost in 1-2 Seconds which was impacting others services as well as load on our application was also increasing which impact our application instances are getting down due to high response time , 
+1- on DT verify which service is taking more response time - UPIService taking more time.
+2- from our end we configured the services on middleware msg broker platform called SOLACE our application is Producer and UPI service is Consumer , so we verify UPIService topic status like there consumer is up or not then Queue status and issue was in Queue so there are multiple responses were queued and UPI application unable to consume those .
+3- We Informed about this finding to UPI team on priority and as per there confirmation we flushed the Queued responses to avoid application downtime , so after flushed there responses our application response time get normal and everything works smoothly.
+
 ===========================
 DR activity 
 Invalid objects in DB 

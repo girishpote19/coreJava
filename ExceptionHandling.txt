@@ -1,0 +1,58 @@
+Exception Handling:
+
+Q1 what is exception?
+Exception is the event which blocks the program or application from execution 
+
+Q2. what is the diff betn checked and unchecked exceptions?
+chcked exception are compile time exception which we can handle by using try catch block or at method level using throws keyword ,checked exceptions are - classNotFound,FilenotFound,SQL exception.
+
+Unchecked exception - exception not checked at the compile time ex: NP . arithmatic, ArrayIndexOutOfBounds exception.
+
+Throwable is parent of Exception and Error class
+
+Q3. What is the try-catch block in java?
+try catch block is used to handle the exception at compile time.
+ex"
+try {
+		int a = 10/0;
+	}
+	catch(ArithmaticException e)
+	{
+		print.stackTrace();
+	}
+	
+Q4. what is the diff betn throw and throws keyword?
+Throw : used inside a method to explicityly throw an exception.
+ex- if (age < 18) {
+    throw new ArithmeticException("Not eligible to vote");
+}
+
+Throws : used in the method declaration to indicate that method may throw one or more checked exceptions.
+ex: void readFile() throws IOException, SQLException {
+    // risky code
+}
+
+combine example-
+void validate(int age) throws Exception {
+    if (age < 18) {
+        throw new Exception("Invalid age");
+    }
+}
+
+Q5. what is use of finally block?
+Finally block is come with try-catch block and it can hold closure statements like DB clouser, files clouser, Thread release etc. This block will execute every time either exception is there or not it will get execute.
+ex: 
+try {
+	int a =10/0;
+	}
+catch (ArithmaticException e)
+	{
+	Syso("Exception here");
+	}
+finally
+	{
+	Syso("DB close");
+	}
+
+Q6 what is the base class of all exception class?
+Java.lang.Throwable is the superclass of all exception classes which is the Base class of all exception class.

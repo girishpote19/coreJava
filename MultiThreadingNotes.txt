@@ -1,0 +1,338 @@
+MULTITHREADING
+
+1. What is multithreading?
+Multithreading allows us to execution of mutliple threads simultaneusly , thread is the smallest unit of the process which can get executed independently , multithreading helps us to improve the performance of the application.
+2. We can achive mutiplethreading in java by 2 ways :
+ by extending Thread class and override its run () method 
+ ex: 
+ class MyThread extends Thread {
+	public void run() { }
+		MyThread my = new MyThread();
+		my.start();
+		}
+ by implementing Runnable interface override its run method ,passed its instance as thread constructor.
+ ex:
+ class MyRunnable implements Runnable {
+	public void run () {}
+	MyRunnable my = new MyRunnable();
+	Thread thread = new Thread(my);
+	thread.start();
+	
+3. Why Multithreading?
+Interviewers expect you to say:
+
+1. Better CPU Utilization
+
+Threads run in parallel, keeping CPU busy.
+
+2. Faster Execution
+
+Multiple tasks run simultaneously.
+
+3. Improved Application Performance
+
+Background tasks (logging, file upload, audit queue processing, etc.) run without blocking main logic.
+
+4. Used in Real Projects
+
+Producer–Consumer
+
+WebServer handling multiple requests
+
+Async tasks (email/SMS sending)
+
+Thread pool executor in Spring
+
+🟦 Step 1: What is a Thread? (Basic Foundation)
+👉 Simple definition:
+
+A thread is like a small worker inside your program that performs a task.
+
+💡 Real-Life Example:
+
+Imagine you have a kitchen with:
+
+1 cook → single-thread
+
+3 cooks → multi-thread
+
+More cooks = more work done in parallel.
+
+🧠 In Java:
+
+A Java program normally has multiple threads:
+
+Main thread – runs your main method
+
+GC thread – runs garbage collector
+
+User defined threads – you create them
+
+🟦 Step 2: Why do we need Threads?
+Without threads:
+
+Your program works one task at a time.
+
+With threads:
+
+Your program can do multiple tasks at the same time.
+
+Real Example:
+
+A web server:
+
+Thread1 → login request
+
+Thread2 → payment request
+
+Thread3 → fetch profile
+
+Thread4 → send OTP
+
+So each request gets its own thread.
+
+🟦 Step 3: How to create a Thread? (Very Easy)
+
+There are 2 ways.
+
+Way 1 → Extending Thread class
+class MyThread extends Thread {
+    public void run() {
+        System.out.println("Thread is running...");
+    }
+}
+
+public class Test {
+    public static void main(String[] args) {
+        MyThread t = new MyThread();
+        t.start(); // starts new thread
+    }
+}
+
+🔥 Important:
+
+start() → starts a new thread
+
+run() → contains the code to execute
+
+Never call run() manually
+
+Way 2 → Implementing Runnable (Best method)
+class MyTask implements Runnable {
+    public void run() {
+        System.out.println("Task running...");
+    }
+}
+
+public class Test {
+    public static void main(String[] args) {
+        Thread t = new Thread(new MyTask());
+        t.start();
+    }
+}
+
+Why Runnable is better?
+
+Because Java doesn’t allow multiple inheritance.
+You can extend one class only, so using Runnable is flexible.
+
+🟩 Step 4: Thread Lifecycle (Very Important)
+
+Threads go through different states:
+
+NEW → RUNNABLE → RUNNING → WAITING/BLOCKED → TERMINATED
+
+Simple explanation:
+
+NEW: thread object created
+
+RUNNABLE: start() is called but waiting for CPU
+
+RUNNING: using CPU
+
+WAITING: sleeping/waiting for lock
+
+TERMINATED: done
+
+🟦 Step 5: Thread Methods (Very Simple Today)
+Method	What it does
+start()	start new thread
+run()	thread logic/task
+sleep(1000)	pauses thread
+join()	wait for other thread
+yield()	give chance to others
+interrupt()	interrupt sleeping thread
+🟧 Step 6: Understanding Race Condition (Very Important)
+What is race condition?
+
+When two or more threads try to modify the same data at same time, data becomes inconsistent.
+
+Example:
+
+Two threads increasing balance:
+
+Thread1: balance = balance + 100
+Thread2: balance = balance + 100
+
+
+Result might be:
+
+200
+
+OR 100
+
+OR wrong value
+
+This is where synchronization comes.
+
+🟥 Step 7: Synchronization (Beginner Level Today)
+Definition:
+
+Synchronization means only one thread can access code at a time.
+
+synchronized void increment() {
+    count++;
+}
+
+
+This prevents data corruption.
+
+🟦 Today’s Summary (You learned):
+
+✔ What is a thread
+✔ Why use threads
+✔ How to create threads
+✔ What is run() & start()
+✔ Thread lifecycle
+✔ Race condition
+✔ Basic synchronization
+
+🔥 STEP 2 — Advanced Multithreading Concepts
+
+1. Synchronized block vs Synchronized method:
+
+Synchronized method :
+~Lock is on entire method.
+~Slower -> becuase whole method is locked.
+
+ex: 
+synchronized void increment() {
+count++;
+}
+
+Synchronized block:
+~ Lock is on specific part of method.
+~ Faster -> coz only specific part is locked.
+
+void increment() {
+	synchronized(this) {
+		count++;
+		}
+	}
+
+We use synchronized blocks to improve the app performance by locking only required code instead of locking entire method.
+
+realtime project : used in authenticationService , schedulersClasses for run schedulers jobs.
+
+2. What is Volatile keyword?
+Problem: 
+If two threads accessing the variables , one thread may not see updated immediately because threads store variables in CPU cache.
+Solution:
+	volatile boolean flag = true;
+Meaning:
+variable value is always read from main memory.
+all threads get updated value immediately
+
+3. Deadlock 
+Deadlock is the situation where every thread is in waiting state for the resource availability and the thread which currently occupied the resource that is also into the waiting state such situation is called as Deadlock.
+
+Real Life Example:
+Boyfriend has phone and wants charger.
+Girlfriend has charger and wants phone.
+Both are waiting → no one gives → deadlock.
+
+4.Runnable VS Callable Interfaces
+
+| Runnable               | Callable               |
+| ---------------------- | ---------------------- |
+| override run()         | override call()        |
+| no return value        | returns value          |
+| cannot throw exception | can throw exception    |
+| used for simple tasks  | used for complex tasks |
+
+5. Thread Pools (Executor Framework)
+
+Creating too many threads → memory issue.
+
+So Java introduced Thread Pool.
+
+Thread Pool Working (GeeksForGeeks)
+Step 1: Idle State
+Tasks are submitted and placed in the Task Queue.
+Worker threads exist but are idle until work arrives.
+Thread-Pool-1
+Thread Pool Initialization with size = 3 threads. Task Queue = 5
+Step 2: Task Assignment
+Each idle thread picks a task from the queue.
+Example: Thread 1 -> Task 1, Thread 2 -> Task 2, Thread 3 -> Task 3
+Remaining tasks (Task 4, Task 5) wait in the queue.
+Thread-Pool-2
+Thread Pool executing first three tasks
+Step 3: Thread Reuse
+Once a thread completes its current task, it becomes idle again.
+It immediately takes the next waiting task from the queue.
+Example: Thread 1 -> Task 4, Thread 2 -> Task 5, Thread 3 -> Idle (no tasks left)
+Thread-Pool-3
+Thread Pool executing task 4 and 5
+
+RealTimeProject example :
+in EmailSending method we used threadPool for trigger mail asynchrously and write memo in DB.
+
+=============
+Q1. what is thread and what are the diff stages in its lifecycle?
+Thread is smallest unit of process, which executed independently.
+
+new state , runnable state, running state, waiting state, dead state.
+
+Q.2 what is the diff betn process and thread?
+Process means program in execution and Thread means its a part of the process.threads shares memory while process do not share.
+
+Q.3 what is diff types of thread priorities available in java?
+there are total 3 diff types of priority available in java. 
+MIN_PRIORITY: Integer val 1.
+NORM_PRIORITY: Integer val 5.
+MAX_PRIORITY: Integer val 10
+
+Q.4 What is context switching in java?
+conext switching is the process where CPU saves the state of one thread and restores the state of another thread to enable multitasking in java.
+Context Switching म्हणजे CPU एका वेळी चालू असलेला एक thread थांबवून दुसरा thread चालवतो, तेव्हा पहिल्या thread ची current state (context) save केली जाते आणि दुसऱ्या thread ची state restore केली जाते.
+example:
+class MyThread extends Thread {
+    public void run() {
+        System.out.println(Thread.currentThread().getName());
+    }
+}
+
+public class Test {
+    public static void main(String[] args) {
+        MyThread t1 = new MyThread();
+        MyThread t2 = new MyThread();
+
+        t1.start();
+        t2.start();
+    }
+}
+➡ CPU t1 आणि t2 मध्ये context switching करत output देतो
+➡ Output order fix नसतो
+
+Q.5 what is the diff betn user threads and Daemon threads?
+User threads perform the main application tasks and keep the JVM alive example main() thread. whereas daemon threads run in the background and terminate automatically when all user threads tasks finish its execution example: GC
+
+Q.6 what is synchronization?
+Synchronization ensures that only single thread can access the shared resource at time and maintain the data properly without any data corruption.
+
+Q.7 what is deadlock?
+Deadlock is the situation where every thread is in waiting state and the shared resource which is occupied by the thread that is also went into the wait state so no one will get the shared resource such type of situation is called Deadlock.
+
+Q.8 what is use of wait() and notify() method.
+wait() method is from java object class and pause the execution of thread until another thread can call notify() notifyAll() methods.

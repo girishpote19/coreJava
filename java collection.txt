@@ -1,0 +1,29 @@
+Java Collection:
+i. Java collection is the framework which is having classes & Interfaces that provides us the readymade DS & algorithm so with the help of that we can manipulate group of objects.
+ii. its from java.util PKG.
+iii. Iterable is the root interface of java collection. which is subinterface - List, Set, Queue
+
+1) List: 
+i. stores elements in ordered format
+ii. Allows duplicate elements
+iii. List Interface implemented by the classes - arraylist, linkedlist, vector.
+iv. syntax: ArrayList<String> name = new ArrayList<>();
+
+2) Set:
+i. stores elements in unorder format.
+ii. not allows duplicate elements.
+iii. Set Interface implemented by the classes - HashSet, TreeSet, LinkedHashset
+iv. syntax: Set<Integer> s = new HashSet<>();
+
+3) Queue:
+i. Queue is work on FIFO mechanism.
+ii. Queue Interface implemented by the classes - LinkedList, PriorityQ
+iii. syntax: Queue<Integer> q = new LinkedList<>();
+
+4) MAP:
+i. Map is having seperate hirerchy in collection.
+ii. Map can stores elements Key-Value pair format.
+iii. Each Key must be unique and having associated single value.
+iv. Map Interface can be implemented by - HashMap, TreeMap, LinkedHashMap
+v. syntax: Map<String,Integer> map = new HashMap<>(); - map.put("one",1);
+vi. In Map if Key is already present and we add same key again the newly added key/value will override the old key/value.

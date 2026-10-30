@@ -1,0 +1,118 @@
+1. String pool -
+The java String constant pool is special memory area inside the HEAP memory that stores string literals.
+when JVM run hota hai :
+. first its checks string already present hai in string pool.
+. if yes it reuses existing string refrrence
+. if no it creates new string object in the string pool
+
+iske karan lot of memory save hota hai by reusing immutable string object.
+
+🌟 String Pool म्हणजे काय?
+
+JVM मध्ये Heap मेमरीत एक खास जागा असते → String Constant Pool (SCP).
+
+इथे String literals फक्त एकदाच साठवले जातात.
+
+जेव्हा तू String s1 = "Hello"; असे लिहितोस, तेव्हा JVM पाहते:
+
+Pool मध्ये "Hello" आधीपासून आहे का?
+
+असेल → त्याचाच reference देईल
+
+नसेल → नवीन literal pool मध्ये ठेवेल
+
+example :
+String s1 = "Java";
+String s2 = "Java";
+
+येथे JVM String Pool मध्ये "Java" फक्त एकदाच साठवते.
+
+s1 आणि s2 दोघेही त्याच String object कडे point करतात.
+
+❌ परंतु new keyword वापरल्यास
+String s3 = new String("Java");
+हे नेहमी नवीन Object तयार करते (Heap मध्ये),
+म्हणून String Pool चा फायदा होत नाही.
+
+👍 String Pool का वापरतात?
+
+मेमरी वाचवण्यासाठी
+
+performance सुधारण्यासाठी
+
+duplicate string objects टाळण्यासाठी
+
+1. Why are Strings Immutable in Java?
+Strings are Immutable means their values cannot changed once created, If you try to change a string value using its functions like concat() or replace() , a new string object is created instead of modifying original one.
+
+✅ 1. Security (सुरक्षेसाठी सर्वात मोठे कारण)
+
+Strings वारंवार खालील ठिकाणी वापरले जातात:
+
+File path
+
+Username/password
+
+Database connection URL
+
+Network connections (IP, port)
+
+जर Strings mutable असते, तर कुणीही त्या values run-time ला बदलू शकत होते → Security breach.
+
+✔ Example:
+Connection(URL) जर URL मध्ये कुणी runtime ला बदल केला तर application crash किंवा hacking शक्य.
+
+✅ 2. Thread Safety (No need for synchronization)
+
+Strings immutable असल्यामुळे:
+
+Two threads एकाच String वापरत असले तरी conflict होत नाही
+
+Because value बदलतेच नाही
+
+✅ 3. Caching and Hashcode stability
+
+Strings चा hashCode() value त्याच्या content वर अवलंबून असतो.
+
+जर String mutable असते:
+
+value बदलेल → hashcode बदलेल
+
+HashMap / HashSet मधून object हरवेल (corruption)
+
+Immutable असल्यामुळे:
+
+hashcode स्थिर राहतो
+
+त्यामुळे Strings efficient keys बनतात (HashMap keys म्हणून सर्वात जास्त वापरतात)
+
+4. Performance Optimization: saves memory and improves speed.
+
+Q.3 what is the diff betn creating a string using new() and as a literal?
+creating string by using new() keyword its create new obj of that string in Heap memory area even if that value is already present in the heap memory.
+Ex: String s1 = "hello";
+	String s2 = new String ("hello"); // s1 == s2 FALSE ,its create new obj in heap mem.
+	
+and string literal means when JVM starts first its check the string refrence value is already present inside the string constant pool which is small part of heap memory area , if yes then it will use the same refrence value, else its create new refrence inside string constant pool , so its improves application performance save memory.
+Ex: String s1 = "hello";
+	String s2 = "hello"; //s1 == s2 TRUE . String variable S1 value already present so String variable s2 point to the same value without creation new string with value.
+	
+Q.4 what is Collection framework?
+Collection framework is set of classes and interfaces which provides us ready made data structures to store and manipulate group of objects.
+its from java.util.* pkg
+Collection is Interface which is having subinterfaces List, set , Queue
+
+Q.4 what is diff betn ArrayList and LinkedList?
+ArrayList is a dynamic array that can grow or shrink as needed Insertion operation slow. while LinkedList is doubly linked list that allow fast insertion and deletion of the elements, Insertion operation is fast .
+
+Q.5 what is diff betn HashMap and TreeMap?
+HashMap is hashtable that stores key-value pairs, while TreeMap is red-black tree that stores key-value pairs in sorted order.
+
+Q.6 what is the diff betn interator and a ListIterator?
+Iterator is used to travese a collection in a forward direction, while ListIterator is used to travese a list in both forward and backward directions.
+
+Q.7 what is diff betn HashSet and TreeSet?
+Hashet can store elements in unorder format and avoid duplicate elements , null value is fine, while TreeSet can stores elements in sorted order, avoid duplicate elements and No Null value is fine its throw NP exception.
+
+Q.8 What is the purpose of the Comparable interface?
+its provides a natural ordering for class. its override compareTo() method that compares the objects of the same class and return a negative integer, zero or a positive integer depending on wheteher the current obj is less than , equal or greater than the other object.

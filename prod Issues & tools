@@ -1,0 +1,177 @@
+================================================================================================================================================================
+1. CPU Utilization showing 100 % due to AuditQueueOverFlow Queue is overloaded and threads are going into the waiting/parking states 
+================================================================================================================================================================
+In Application for Audit process (users visiting any links on frontEnd) it works on Producer -- Consumer pattern. 
+producer -- cbci app --> insert data in the queue
+consumer -- AuditQueueOverFlow --> consume the data from Q & store it in db
+
+=> Root Cause : 
+AuditQOverFlowSize = 35 And queueSize = 6000 (thread config maintain in code)
+
+1) Consumer --> AuditQ OverFlowSize we have kept in code level = 35 --> as per the logic Thread will process to save the records in DB once queue size > 35 . --> thread is waiting until 35 records and process 35 records batch after the condition satisfied (its time consuming and Utilizing high CPU).
+
+2) Producer--> QueueSize = 6000 --> due to the heavy load on application QueueSize reached to the its max capacity and results the Q going into the blocked state.
+
+==> Fix :
+
+1) reduced AuditQOverFlowSize (consumer) = 30 (small batches will take less time to store in DB and less CPU usage)
+
+2) Increased QueueSize = 7000 -> avoid blocking in case of heavy load on app.
+
+3) Producer - Consumer will able to maintain there Load balance now and application is stable and responsive in heavy load and low cpu utilization.
+
+================================================================================================================================================================
+2. Slowness issue in frontEnd page
+================================================================================================================================================================
+==> Root Cause :
+	In application for view dispute screen page, if have more than 10 records the page was taking more than 5 secs to load that page :
+
+==> Analysis :
+	Analyzed code logic , as per that we were fetching the records from the CHARGEDBACK_RESPONSE table based on filter DISPUTE_CASENo but didnt added INDEX on DISPUTE_CASENo column , and its cozing high query cost for fetch records from that table
+
+==> Fix :
+		We have added Index on column DISPUTE_CASENo query cost reduced / optimized query and view dispute screen page is working fine with more than 10 records.
+
+Facing slowness issue on dispute screen when having more than 10 records 
+
+1 - we have checked the application logs for that time frame but didnt find any exception or errors logs was fine.
+2 - we start debugging that issue first we identify which source .jsp page we are calling for the dispute screen functionality by dev tools on browser.
+3 - we found the source then we check in code base for same and check which controller is calling that .jsp page 
+4 - found the controller then we backtrace the hirerchy call like Controller -> service layer -> DAO layer 
+5 - at DAO layer we found the query from which we are fetching the data from orcale DB 
+6 - so we found RCA they query we are using there having one disputeCaseNo column on that column we havent added any index which cozing high query cost with more records and due to which front end screen taking more time to load the page.
+7 - FIX : we implemented the Index on DisputeCaseNo column so query cost reduces and now its exceuting very quickly with more than 10 records also 
+
+=================================================================================================================================================================
+3. Production Issue: Customers Receiving the Same Email Three Times
+=================================================================================================================================================================
+Problem Statement
+
+In production, customers reported that they were receiving the same email three times instead of once.
+
+Application Flow
+
+Our application uses cron jobs configured in the gui.properties file. These schedulers automatically trigger different functionalities at predefined intervals. The email scheduler was configured to execute every 30 minutes.
+
+Investigation
+
+The scheduler was running on the .52 application server, which had three JVM instances. To identify the root cause, we added additional debug loggers in the code and deployed the changes to the UAT environment for testing.
+
+During analysis, we observed that every time the email scheduler was triggered, it executed simultaneously on all three JVMs. Since each JVM independently picked up the same email records, the same email was processed and sent three times to customers.
+
+Root Cause
+
+The scheduler was active on all three JVMs of the same server, resulting in duplicate processing of the email jobs.
+
+Solution
+
+We implemented a flag-based scheduler execution mechanism.
+
+At the code level, we introduced an isScheduler flag and enabled it only for JVM-1 on the .52 server. The flag was disabled for the remaining JVMs.
+
+As a result, only JVM-1 executes the email scheduler every 30 minutes, while the other JVMs continue serving application requests without triggering the scheduler.
+
+Result
+Duplicate email issue was completely resolved.
+Customers started receiving only one email per scheduled execution.
+Scheduler execution became controlled and consistent across the clustered environment.
+The fix was validated in UAT and successfully deployed to Production.
+
+RAW - 2. Customers receiving same emails 3 time send hora tha 
+
+application ke gui properties me humne cronjob schedule kiye hai to ye cron job uske schedule time ke anusar functionality trigger karega automatically, so for email functionality also we have scheduled cron job and o har 30 mins ke baad run hota hai, 
+to ye scheduler run hote hai .52 vale server pe waha pe 3 JVM hai , to for findout the RCA about this issue we added extra debug loggers in code level and tested in UAT , to hume identify hua ki jab emailScheduler trigger hota hai every 30 mins to ye .52 ke 3 JVM's pr run hota hai and uske karan customer ko 3 time emails send hore hai.
+
+solution - to humne flag based approch implement kiya, code level pe scheduler ke chnages kiye and only .52 ke jvm 1 pe isScuelr flag enable kiya uske karan abhi sirf emailScheduler .52 ke JVM1 se run hoga and issue is got fix.
+
+=================================================================================================================================================================
+4 . **Production Issue: Dispute Report Not Generating After New Feature Deployment**
+=================================================================================================================================================================
+
+### Problem Statement
+
+After a new feature deployment in the Production environment, the **Dispute Report** was not getting generated through the scheduled Autosys job. However, the same functionality was working correctly in the UAT environment.
+
+### Investigation
+
+To identify the root cause, we first compared the Production deployment with UAT and verified all the components that were part of the release.
+
+The deployment included:
+
+* Application code changes
+* Database changes
+* Shell script changes for report generation
+
+We validated each component one by one.
+
+* The application code deployment was correct.
+* Database changes were successfully applied.
+* Finally, while verifying the shell scripts on the Production server, we identified the issue.
+
+### Root Cause
+
+The updated shell script responsible for generating the dispute report had been replaced during deployment, but the required **execute permission** was not assigned to the new script.
+
+Because of the missing execution permission, the Autosys job was unable to execute the shell script, resulting in report generation failure.
+
+### Solution
+
+We assigned the required execute permission to the shell script using the appropriate Linux command and verified the Autosys job execution.
+
+After the permission was updated, the Autosys job executed successfully, and the dispute report was generated as expected.
+
+### Result
+
+* The dispute report generation issue was resolved.
+* Autosys jobs started executing successfully.
+* Report generation was restored without requiring any code changes.
+* We also recommended including file permission verification as part of the deployment checklist to avoid similar issues in future releases.
+
+RAW - 
+3. In application bank imp report generating through autosys jobs issue is after the new feature implementation dispute report was not generating but in UAT its working fine, so humne first  new feature deployment me kya kya file changes the o verify kiye , 
+to for dispute report generation there are some code/db and shell script level changes done by development team , code and DB changes me sab ok tha main issue shell script me tha after 
+replacing the dispute report file in prod server o file ko required permission set nahi kiye the uske karn Autosys job o dispute report vali shell script execute nahi kar para tha after giving the required permission o report properly genetrate hone laga.
+
+
+===========================
+NIGHT TIME PROD ISSUE FIX
+During night period Dynatrace alerts was started and in TXN services response time was too high almost in 1-2 Seconds which was impacting others services as well as load on our application was also increasing which impact our application instances are getting down due to high response time , 
+1- on DT verify which service is taking more response time - UPIService taking more time.
+2- from our end we configured the services on middleware msg broker platform called SOLACE our application is Producer and UPI service is Consumer , so we verify UPIService topic status like there consumer is up or not then Queue status and issue was in Queue so there are multiple responses were queued and UPI application unable to consume those .
+3- We Informed about this finding to UPI team on priority and as per there confirmation we flushed the Queued responses to avoid application downtime , so after flushed there responses our application response time get normal and everything works smoothly.
+
+===========================
+DR activity 
+Invalid objects in DB 
+AppSecurity issues 
+Updating shell scripts for Reports
+CSP headers, HTTP Host Header Injection ,Cross Site Scripting
+Slowness in application UI - 
+Deployment on UAT , and guide to the deployment team
+fix prod bug issues reported by client and provide justification
+ 
+===============================
+
+
+✅ AppDynamics Scenario (Simple Version)
+Issue:
+“The mini-statement page was loading slowly.”
+What I did:
+“In AppDynamics, I checked Business Transaction snapshots and saw multiple DB calls for each record.”
+Fix:
+“We changed it to fetch all records in one query and added caching.”
+Impact:
+“Response time dropped significantly.”
+Interview Answer (10–15 sec):
+“In AppDynamics, I found multiple DB calls causing slowness on the mini-statement page. We optimized it to one query and added caching, which improved speed.”
+
+
+✅ Ansible Script Scenario
+Issue:
+“We had to update a config file on 5 servers.”
+What I did:
+“I wrote a simple Ansible task to replace a property in application.properties and restart the app.”
+Impact:
+“Instead of logging into each server, one command updated all configs.”
+Interview Answer (10–15 sec):
+“I wrote an Ansible script to update application properties and restart the service on multiple servers in one go, which reduced manual effort.”

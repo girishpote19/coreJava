@@ -1,0 +1,498 @@
+Java Core -
+
+1. what is difference between JDK & JRE?
+-> JDK - java development Kit which is a software development environment for building Java apps. Write & compile code. ex: javac MyApp.java (javac comes from JDK)
+JRE - JAVA Runtime Environment , which is required to run Java programs.Run the code. ex; java MyApp (java command & JVM comes from JRE).
+
+2. Why is Java Platform independent language?
+-> Java is the Platform independent coz of the concept of JVM and byteCode.
+-> Java is platform independent becuase the compiler generates Bytecode that is not OS dependent. The JVM on each OS interprets the same byteCode and converts it into native machine code .which makes Java programs independent.
+ex: javac MyApp.java --> MyApp.class (byteCode) program independent.
+
+3. What is the difference between an Abstract class and an Interface?
+-> An Abstract class is class that cannot be instantiated or create obj of it , and can only be inherited.
+	can have Abstract and non-abstract methods
+	can have constructor.
+	no body to abstract methods.
+-> An Interface is blueprint of class that contains only abstract methods and constants.
+	Methods are public abstract by default (Java 8+ supports default & static methods).
+	variables are always public static final (Constants).
+	No Constructor (coz cannot be instantiated)
+	Supports multiple inheritance ( class can implement multiple interfaces).
+ex: Abstract Class Example -
+abstract class Payment {
+		void generateReceipt(){
+		Syso("Receipt generated");
+		}
+		abstract void makePayment(); }
+Here:
+
+generateReceipt() is a common,non-abstract method
+
+makePayment() must be implemented by child classes	
+
+Interface Example: 
+interface UPI {
+    void payThroughUPI();
+}
+
+Use Case:
+ class GooglePay extends Payment implements UPI {
+
+    @Override
+    void makePayment() {
+        System.out.println("Payment via Bank Server");
+    }
+
+    @Override
+    public void payThroughUPI() {
+        System.out.println("UPI Payment");
+    }
+}
+👉 Payment (abstract class) gives common functionality
+👉 UPI (interface) gives capability behavior
+👉 GooglePay can use both
+
+4. What is the diff between final, finally and finalize?
+-> Final is used to make variable,class or method constant and cannot change later.
+variable - value cannot be changed
+method - cannot be overridden
+class - cannot be inherited
+Example : final int x = 10;  // cannot change value x = 20 → error
+
+final void display() {}  // cannot override
+
+final class Vehicle {}   // cannot extend
+
+->Finally is used in try-catch blocks to execute a block of code either exception is thrown or not . eg: closing db connections, closing files, freeing up threads.
+example : try {
+    int a = 10 / 0;
+} catch (Exception e) {
+    System.out.println("Exception");
+} finally {
+    System.out.println("Close DB connection");
+}
+
+->finalize is a prtotected method that is called by the Garbage collector for code cealnup when an object is no longer in use.
+ example : @Override
+protected void finalize() {
+    System.out.println("Object is getting garbage collected");
+}
+
+5. what is the difference betn stack and head memory?
+-> stack memory is used for storing local variables, refrences and function called
+ex: void test() {
+    int a = 10;      // stored in stack
+    Employee e = new Employee();  // e is reference stored in stack
+}
+
+-> HEap memory is used for soring objects and instance variables.
+ex: Employee e = new Employee();
+e (reference) → stack
+actual new Employee() object → heap
+
+| Feature       | Stack                         | Heap                        |
+| ------------- | ----------------------------- | --------------------------- |
+| Stores        | Local variables, references   | Objects, instance variables |
+| Speed         | Fast                          | Slower                      |
+| Thread-safety | Each thread has its own stack | Shared across threads       |
+| Managed by    | Java automatically            | Garbage Collector           |
+| Errors        | StackOverflowError            | OutOfMemoryError            |
+
+6. what is diff betn method overloading and method overriding?
+-> Method Overloading means method having same names but different parameters in same class.
+ex: 
+class Calculator {
+
+    int add(int a, int b) {
+        return a + b;
+    }
+
+    double add(double a, double b) {
+        return a + b;
+    }
+
+    int add(int a, int b, int c) {
+        return a + b + c;
+    }
+}
+Here, add() is overloaded 3 times.
+-> Method Overriding means there we have childParent relationship where child class can override properties or functions of there parent class by extend it and provides its own implemention.
+Ex :
+class Bank {
+    double getRate() {
+        return 5.0;
+    }
+}
+
+class SBI extends Bank {
+    @Override
+    double getRate() {
+        return 6.5;
+    }
+}
+SBI overrides getRate().
+Overriding = Child changes parent's rule
+
+👉 Example:
+Father says: “Wake up at 6 AM.”
+You say: “No, I will wake up at 7 AM.”
+
+You override the rule → Overriding.
+
+7. What is diff betn a private and protected modifier?
+-> Private modifier allow members accessible only within same class.
+	Used for encapsulation and hiding sensitive data.
+	Private methods cannot be overridden.
+EX: 
+	class A {
+    private int data = 10;
+    private void show() {
+        System.out.println("Private Method");
+    }
+}
+data and show() cannot be accessed from outside class A.
+
+-> Protected modifier allow members accessible within the same class and its subclasses even in diff pkg.
+EX :
+class A {
+    protected int value = 20;
+    protected void display() {
+        System.out.println("Protected Method");
+    }
+}
+
+class B extends A {
+    void test() {
+        System.out.println(value); // allowed
+        display();                 // allowed
+    }
+}
+
+8. What is constructor overloading in java?
+-> Constructor Overloading means creating multiple constructors in the same class with the same name but different parameters.
+ex:
+class Employee {
+
+    int id;
+    String name;
+    String dept;
+
+    // 1. No-arg constructor
+    Employee() {
+        this.id = 0;
+        this.name = "Unknown";
+        this.dept = "General";
+    }
+
+    // 2. Constructor with 1 parameter
+    Employee(int id) {
+        this.id = id;
+    }
+
+    // 3. Constructor with 2 parameters
+    Employee(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    // 4. Constructor with 3 parameters
+    Employee(int id, String name, String dept) {
+        this.id = id;
+        this.name = name;
+        this.dept = dept;
+    }
+}
+Here, the class Employee has four constructors, each providing a different way to initialize an object.
+
+10 . What is the use of super keyword in java?
+-> Super keyword is used to access parent class (superclass) members such as:
+	parent variables
+	parent methods
+	parent constructors
+Mainly used in inheritance.
+super keyword has 3 main uses
+1) Useful when parent and child have the same variable names.
+ex:
+class A {
+	int val = 100; }
+class B extends A{
+	int val = 200;
+	
+	void show(){
+	Syso (this.value); // child value → 200
+	Syso (super.value); // parent value → 100
+} }
+2) To call parent class methods
+used when child class overrides a method but still wants to use parent method.
+ex:
+class A {
+	void msg () {
+		Syso ("Msg from parent");
+		}
+	}
+class B extends A {
+	@Override
+	void msg (){
+		super.msg(); //call parent method here
+		Syso ("msg from child"); //overidin method
+		}
+	}
+3) To call parent class constructor
+must be the first statement inside the child constructor.
+ex:
+class A {
+	A() {
+		Syso ("Parent constructor");
+		}
+	}
+class B extends A {
+	B() {
+		super(); //calls parent constructor
+		syso ("child constructor");
+		}
+	}
+	
+11. What is the diff betn static methods, static variables, and static classes in java?
+-> Belongs to the Class not to the  Object.they are allocated mem when the class is loaded and directly called with the help of class names.
+Java has -
+1. static Variables.
+2. Static methods.
+
+1. static variables :
+Variables declared by Static keyword and variables belong to the class not to obj.
+stored in class loading memory.
+ex :
+class emp {
+	static String company = "CG";
+	int id;
+}
+All emp objects has same company value = "CG".
+2. Static Method:
+methods declared by Static keyword belong to the class not to object.
+can called without obj creation.
+Ex: 
+class MathUtils {
+	static int square(int x) {
+	return x*x ;
+}
+}
+call directly without obj create : MathUtils.square(5);
+
+12. what exactly is system.out.println in  java?
+-> System.out.println() is a method to print a message on the console. 
+System - its a class present in java.lang pkg.
+Out - is the static variable inside System class.
+println() - is the method present in the PrintStream class - print msg on new line
+
+13. what part of memory-Stack or Heap is cleaned in the garabage collection process?
+-> GC is done on Heap memory to free the memory from unused java objects.
+
+============================================================================================
+Object Oriented Programming
+
+1. what are the object oriented fetures supported by java?
+
+Abstraction - Hidding sensitive data from the users and shows only essentials deatils to them this can be done through abstract classes and interfaces.
+ex: sending SMS, ATM machine.
+Realtime ex: List list = new ArrayList()
+
+Encapsulation - Wrapping data members / functions in single unit and keep them secure by using access modifier as private .
+Ex: capsule in which several medicines are wrapped together in single unit
+Realtime ex: DTO/POJO classes
+
+Inheritence - here we have child parent relationship, child class can extends the properties of there parent class .
+types of inheritance - single, multiple (not possible - possible thrpugh the Intefaces), multilevel, heirarchical
+
+Polymorphism - perform single action in different ways like single person have diff roles eg: Woman can perform diff roles like Mother , sister , houswife, emp etc
+two types of polymorphism - 
+copiletime method overloading
+runtime method overriding
+
+overloading means having same function name but diff parameters. eg : add(), add(a,b)..
+overriding means child class can override the properties of there parent class by extending the parent class and provides its own implementation.
+
+class and Object - class is the blueprint/templates its collection of obj.
+object are nothing but realworld data entities which is having data members and functions
+eg - class Dog {
+		String name; 
+		
+		eat();
+		bark();
+		}
+		Dog d = new Dog();
+		d.eat();
+		d.bark();
+		
+2. what are the diff access specifiers used in java?
+
+Java has 4 access specifiers:
+public - less restrictive can be access by any class or method.
+Use case:
+Methods used across layers (Controller → Service → DAO).
+
+private - can be accessed only within the class.
+Use case:
+Hide sensitive data → like password, salary, user info.
+
+protected - can be accessed in same class, then the classes of same pkg or outside of pkg by subclasses of that class via inheritance.
+
+Default no keyword - can be accessed within same pkg its default option for class , method and variables.
+
+3. What is the diff betn Composition and Inheritence?
+Java supports Two major ways to reuse code.
+
+Inheritence(is-a relationship) -
+
+one class extends another class
+ex: class Car extends Vehicle {} - 
+meaning - Car isA Vehicle.
+use when : 
+child class wants to use parentclass properties
+achive overriding
+Problems:
+tight coupling , parent class changes -> child also affected
+multiple inheritance not supported, break encapsulation(child gets too much access).
+
+Composition(has-a relationship)-
+
+One class contains another class object.
+ex: class Car {
+	private Engine engine = new Engine ();
+	}
+Meaning - Car hasA Engine
+Use when:
+loosely coupled - replacing any code easy
+want strong encapsulation
+avoid multiple inheritance issue.
+
+4. What is the purpose of an abstract class?
+-> Abstract class is declared by using Abstract keyword , we cannot intatntiated / create object of the abstract class.Abstract class has abstract methods without its implementation just method and which is implemented in the subclasses.
+Abstract class helpful for achive abstraction and code reusability , abstract classes can be inhertited by the other classes.
+
+5.What are the diff betn constructor and method of a class in Java?
+-> constructor has same name as class name , 
+constructor is required for object createion , 
+we can have default constructor as well as parameterize constructors.
+Constructor have no return type.
+
+Method is used to expose the object behaviour/ logic.
+method should have return type , if does not return anything return type is void.
+ ex: public class Emp {
+		private int id;
+		
+		public Emp(int id) {
+		//constructor
+		this.id = id;
+		}
+		
+	public void fetchData(){
+		Syso("fetching data");
+		}
+	}
+Usage:
+	Emp emp = new Emp(); //constructor called automatically
+	emp.fetchData(); //method called explicitly
+	
+6. What is diamond problem in java and how is it resolved?
+-> A class inherits from two parent classes, and both parent classes have a method with the same name.
+      A
+     / \
+    B   C
+     \ /
+      D
+class B and C inherit from A.
+class D inherits from class B & C.
+if A has method sayHello(), and both class B & C inherit it.
+then class D gets two copies of same method sayHello().
+so the compiler get confused: which sayHello() should class D use - from B or from C?
+This ambiguity is called the Diamond problem.
+
+Why Java Does NOT Have the Diamond Problem?
+Because Java does not support multiple inheritance with classes.
+❌ You cannot do this in Java:
+class B extends A, C { } 
+
+Diamond problem with Java Intefaces:
+interface A {
+	default void show() {
+		Syso("A show");
+		}
+	}
+interface B {
+	default void show() {
+		Syso("B show");
+		}
+	}
+
+class C implemets A, B {
+
+	@Override
+	public void show () {
+		Syso("resolved show in C");
+		}
+	}
+👉 Java forces class C to override show() to avoid ambiguity.
+
+7. What is the diff betn local and instance variables in Java?
+Local variable - variables decalred inside the methods, belongs to the method. 
+cannot use access modifier public, private , protected
+stored in stack.
+ex:
+void test() {
+	int x = 10; // local variable
+}
+Instance variable- variables decalred inside the class.belongs to the object(instance). access modifiers use public, private.
+stored in heap
+ex:
+class Emp {
+	int age; //instance variable
+}
+
+8. What is Marker interface in java?
+Marker interface also called as Tagging interface that has No methods, No fields, No Code
+it is used to marked / tag a class so JVM can understand that the class has some special behavior.
+⭐ Examples of Marker Interfaces in Java:
+1️. Serializable
+Used to mark a class eligible for serialization (converting object → byte stream).
+class Employee implements Serializable { }
+
+===============================================================================
+9. What is Singleton Class in Java?
+Singleton class mhanje ashi class jyacha purna application madhe fakta ekach object (instance) tayar hoto aani to object sarv thikani shared vaprla jato.
+
+Singleton ka vapartat?
+. DB connection
+. loggers
+. thread pool
+
+🧱 Singleton Class कशी तयार करतात?
+
+Singleton साठी 3 main rules पाळावे लागतात:
+
+1️⃣ Constructor private असतो
+➡ बाहेरून new वापरून object बनवता येऊ नये
+
+2️⃣ Static variable
+➡ एकच instance साठवण्यासाठी
+
+3️⃣ Public static method
+➡ object मिळवण्यासाठी (global access point)
+
+Example: Java Singleton Class Syntax
+class SingletonExample {
+
+   // private field that refers to the object
+   private static SingletonExample singleObject;
+                                              
+   private SingletonExample() {
+      // constructor of the SingletonExample class
+   }
+
+   public static SingletonExample getInstance() {
+      // write code that allows us to create only one object
+      // access the object as per our need
+   }
+}
+
+https://javatechonline.com/singleton-class-in-java-with-examples/
